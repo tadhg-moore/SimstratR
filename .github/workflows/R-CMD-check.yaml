@@ -75,13 +75,15 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
+          brew install gcc
+          brew install hdf5
+          brew install szip
           brew install netcdf
           
       - name: Install dependencies
         run: |
-          install.packages("pak")
-          pak::local_install_dev_deps(upgrade = TRUE)
-          pak::pkg_install("rcmdcheck")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
       - name: Check
