@@ -12,10 +12,10 @@
 #'Jorrit Mesman, Tadhg Moore
 #'@examples
 #'sim_folder <- system.file('extdata', package = 'SimstratR')
-#'run_simstrat(sim_folder, par_file = 'langtjern.par')
+#'run_simstrat(sim_folder, par_file = 'simstrat.par')
 #'@export
 #'@importFrom utils packageName
-run_simstrat <- function (sim_folder = ".", par_file="langtjern.par", verbose = TRUE)
+run_simstrat <- function (sim_folder = ".", par_file = "simstrat.par", verbose = TRUE)
 {
   ### Windows
   if (.Platform$pkgType == "win.binary") {
@@ -65,11 +65,12 @@ run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
     return(out)
   }, error = function(err) {
     print(paste("Simstrat_ERROR:  ",err))
+  }, finally = {
     setwd(origin)
   })
 }
 
-# run_simstratOSx <- function(sim_folder, par_file = 'langtjern.par', verbose=TRUE){
+# run_simstratOSx <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
 #
 #   # simstrat_path <- system.file('extbinmac/simstrat.exe', package = 'SimstratR')
 #   # # File to the folder with the mac-executable for simstrat
@@ -100,7 +101,7 @@ run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
 #   })
 # }
 
-run_simstratNIX <- function(sim_folder, par_file = 'langtjern.par', verbose=TRUE){
+run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
   simstrat_path <- system.file('exec/nixsimstrat', package= packageName())
 
   Sys.setenv(LD_LIBRARY_PATH=paste(system.file('extbin/nix', 
@@ -122,11 +123,12 @@ run_simstratNIX <- function(sim_folder, par_file = 'langtjern.par', verbose=TRUE
     return(out)
   }, error = function(err) {
     print(paste("Simstrat_ERROR:  ",err))
+  }, finally = {
     setwd(origin)
   })
 }
 
-run_simstratOSx <- function(sim_folder, par_file = 'langtjern.par', verbose=TRUE){
+run_simstratOSx <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
   simstrat_path <- system.file('exec/simstrat', package= packageName())
   
   
@@ -145,6 +147,7 @@ run_simstratOSx <- function(sim_folder, par_file = 'langtjern.par', verbose=TRUE
     return(out)
   }, error = function(err) {
     print(paste("Simstrat_ERROR:  ",err))
+  }, finally = {
     setwd(origin)
   })
 }
@@ -166,6 +169,7 @@ simstrat.systemcall <- function(sim_folder, simstrat_path, verbose, system.args)
     return(out)
   }, error = function(err) {
     print(paste("simstrat_ERROR:  ",err))
+  }, finally = {
     setwd(origin)
   })
 }
