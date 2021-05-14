@@ -1,3 +1,7 @@
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/tadhg-moore/SimstratR/workflows/R-CMD-check/badge.svg)](https://github.com/tadhg-moore/SimstratR/actions)
+  <!-- badges: end -->
+
 SimstratR
 ====
 
