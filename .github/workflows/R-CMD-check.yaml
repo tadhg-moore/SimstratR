@@ -75,9 +75,7 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install gcc
-          brew install hdf5
-          brew install szip
+          brew update
           brew install netcdf
           
       - name: Install dependencies
