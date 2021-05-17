@@ -78,6 +78,7 @@ jobs:
           rm -rf /usr/local/bin/2to3
           brew unlink gcc@8
           brew unlink gcc@9
+          brew update
           brew install netcdf
           echo 'LLVM_CONFIG=/usr/local/opt/llvm@9/bin/llvm-config' >> $GITHUB_ENV
 
