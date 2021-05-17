@@ -24,13 +24,13 @@ Compatible with Windows, Linux (tested on Ubuntu 18.04.3 LTS) and macOS X.
 ```{r example, eval=FALSE}
 library(SimstratR)
 sim_folder <- system.file('extdata', package = 'SimstratR')
-run_simstrat(sim_folder, par_file = 'langtjern.par')
+run_simstrat(sim_folder, par_file = 'simstrat.par')
 ```
 
 ### Output
 ```{r example, eval = FALSE}
 library(LakeEnsemblR)
-par_file = file.path(sim_folder, 'langtjern.par')
+par_file = file.path(sim_folder, 'simstrat.par')
 
 out_file <- file.path(sim_folder, 'Results', 'T_out.dat')
 ### Extract output
