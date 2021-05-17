@@ -75,15 +75,13 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
-          brew update
-          rm '/usr/local/bin/gfortran'
-          brew link --overwrite gcc
           brew install netcdf
           
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          remotes::install_cran("xtable")
         shell: Rscript {0}
 
       - name: Check
