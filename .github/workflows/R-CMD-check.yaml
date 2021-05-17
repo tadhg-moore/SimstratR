@@ -75,8 +75,13 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install gcc@10
+          rm -rf /usr/local/bin/2to3
+          brew unlink gcc@8
+          brew unlink gcc@9
+          brew update
+          brew upgrade
           brew install netcdf
+          echo 'LLVM_CONFIG=/usr/local/opt/llvm@9/bin/llvm-config' >> $GITHUB_ENV
 
       - name: Install dependencies
         run: |
