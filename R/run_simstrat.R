@@ -102,10 +102,10 @@ run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
 # }
 
 run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
-  simstrat_path <- system.file('exec/nixsimstrat', package= packageName())
+  simstrat_path <- system.file('exec/nixsimstrat', package = packageName())
 
   dylib_path <- paste(system.file('extbin/nix', 
-                                  package=packageName()), 
+                                  package = packageName()), 
                       Sys.getenv('DYLD_LIBRARY_PATH'), 
                       sep = ":")
   origin <- getwd()
@@ -113,7 +113,7 @@ run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE)
   
   tryCatch({
     if (verbose){
-      out <- system2(simstrat_path, wait = TRUE, stdout = TRUE,
+      out <- system2(simstrat_path, wait = TRUE, stdout = "",
                      stderr = "", args = par_file, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     } else {
       out <- system2(simstrat_path, stdout = NULL,
