@@ -113,7 +113,7 @@ run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE)
   
   tryCatch({
     if (verbose){
-      out <- system2(simstrat_path, wait = TRUE, stdout = "",
+      out <- system2(simstrat_path, wait = TRUE, stdout = TRUE,
                      stderr = "", args = par_file, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     } else {
       out <- system2(simstrat_path, stdout = NULL,
