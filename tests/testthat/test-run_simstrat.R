@@ -1,5 +1,3 @@
-context("run example simulation")
-
 test_that("running Simstrat simulation", {
   sim_folder <- system.file('extdata', package = 'SimstratR')
   status = run_simstrat(sim_folder, verbose = TRUE)
@@ -12,6 +10,7 @@ test_that("running Simstrat simulation", {
 
 test_that("running Simstrat simulation - verbose = FALSE", {
   sim_folder <- system.file('extdata', package = 'SimstratR')
+  unlink(file.path(sim_folder, 'Results/T_out.dat'), recursive = TRUE)
   status = run_simstrat(sim_folder, verbose = FALSE)
   
   expect_true(status == 0)
