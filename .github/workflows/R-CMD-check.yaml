@@ -76,7 +76,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           rm -rf /usr/local/bin/2to3
-          brew install "https://raw.githubusercontent.com/Homebrew/homebrew-core/7303d2db018d3b9405758b3e147f9b1364c5994b/Formula/netcdf.rb"
+          brew install gcc
           echo 'LLVM_CONFIG=/usr/local/opt/llvm@9/bin/llvm-config' >> $GITHUB_ENV
 
       - name: Install dependencies
