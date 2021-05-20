@@ -7,6 +7,7 @@
 #'@param sim_folder the directory where simulation files are contained
 #'@param par_file the parameter file that needs to be run
 #'@param verbose Save output as character vector. Defaults to FALSE
+#'@param system.args Optional arguments to pass to GLM executable
 #'@keywords methods
 #'@author
 #'Jorrit Mesman, Tadhg Moore
@@ -15,16 +16,17 @@
 #'run_simstrat(sim_folder, par_file = 'simstrat.par')
 #'@export
 #'@importFrom utils packageName
-run_simstrat <- function (sim_folder = ".", par_file = "simstrat.par", verbose = TRUE)
+run_simstrat <- function (sim_folder = ".", par_file = "simstrat.par", verbose = TRUE,
+                          system.args = character())
 {
   ### Windows
   if (.Platform$pkgType == "win.binary") {
-    return(run_simstratWin(sim_folder, par_file, verbose))
+    return(run_simstratWin(sim_folder, par_file, verbose, system.args))
   }
 
   ### UNIX
   if (.Platform$pkgType == "source") {
-    return(run_simstratNIX(sim_folder, par_file, verbose))
+    return(run_simstratNIX(sim_folder, par_file, verbose, system.args))
   }
 
 
@@ -37,12 +39,13 @@ run_simstrat <- function (sim_folder = ".", par_file = "simstrat.par", verbose =
       stop('pre-mavericks mac OSX is not supported. Consider upgrading')
     }
 
-    return(run_simstratOSx(sim_folder, par_file, verbose))
+    return(run_simstratOSx(sim_folder, par_file, verbose, system.args))
 
   }
 }
 
-run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
+run_simstratWin <- function(sim_folder, par_file="simstrat.par",
+                            verbose=TRUE, system.args){
 
   if(.Platform$r_arch == 'x64'){
     simstrat_path <- system.file('extbin/win/simstrat.exe', package = packageName())
@@ -56,10 +59,10 @@ run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
   tryCatch({
     if (verbose){
       out <- system2(simstrat_path, wait = TRUE, stdout = TRUE,
-                     stderr = "", args=par_file)
+                     stderr = "", args= c(par_file, system.args))
     } else {
       out <- system2(simstrat_path, stdout = NULL,
-                     stderr =NULL,args=par_file)
+                     stderr =NULL, args = c(par_file, system.args))
     }
     setwd(origin)
     return(out)
@@ -101,7 +104,8 @@ run_simstratWin <- function(sim_folder,par_file="simstrat.par",verbose=TRUE){
 #   })
 # }
 
-run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
+run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par',
+                            verbose = TRUE, system.args){
   simstrat_path <- system.file('exec/nixsimstrat', package = packageName())
 
   dylib_path <- paste(system.file('extbin/nix',
@@ -114,10 +118,12 @@ run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE)
   tryCatch({
     if (verbose){
       out <- system2(simstrat_path, wait = TRUE, stdout = TRUE,
-                     stderr = "", args = par_file, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
+                     stderr = "", args = c(par_file, system.args),
+                     env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     } else {
       out <- system2(simstrat_path, stdout = NULL,
-                     stderr = NULL, args = par_file, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
+                     stderr = NULL, args = c(par_file, system.args),
+                     env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     }
     setwd(origin)
     return(out)
@@ -128,7 +134,8 @@ run_simstratNIX <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE)
   })
 }
 
-run_simstratOSx <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE){
+run_simstratOSx <- function(sim_folder, par_file = 'simstrat.par',
+                            verbose = TRUE, system.args){
   simstrat_path <- system.file('exec/simstrat', package= packageName())
 
   origin <- getwd()
@@ -138,10 +145,12 @@ run_simstratOSx <- function(sim_folder, par_file = 'simstrat.par', verbose=TRUE)
   tryCatch({
     if (verbose){
       out <- system2(simstrat_path, wait = TRUE, stdout = "",
-                     stderr = "", args = system.args, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
+                     stderr = "", args = c(par_file, system.args),
+                     env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     } else {
       out <- system2(simstrat_path, wait = TRUE, stdout = NULL,
-                     stderr = NULL, args = system.args, env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
+                     stderr = NULL, args = c(par_file, system.args),
+                     env = paste0("DYLD_LIBRARY_PATH=", dylib_path))
     }
   }, error = function(err) {
     print(paste("SIMSTRAT_ERROR:  ",err))

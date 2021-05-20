@@ -4,7 +4,12 @@
 \alias{run_simstrat}
 \title{Run the Simstrat model}
 \usage{
-run_simstrat(sim_folder = ".", par_file = "simstrat.par", verbose = TRUE)
+run_simstrat(
+  sim_folder = ".",
+  par_file = "simstrat.par",
+  verbose = TRUE,
+  system.args = character()
+)
 }
 \arguments{
 \item{sim_folder}{the directory where simulation files are contained}
@@ -12,6 +17,8 @@ run_simstrat(sim_folder = ".", par_file = "simstrat.par", verbose = TRUE)
 \item{par_file}{the parameter file that needs to be run}
 
 \item{verbose}{Save output as character vector. Defaults to FALSE}
+
+\item{system.args}{Optional arguments to pass to GLM executable}
 }
 \description{
 This runs the Simstrat model on the specific simulation stored in \code{sim_folder}.
